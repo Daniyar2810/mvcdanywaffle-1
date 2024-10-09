@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewBag.Title = "Ürünler";
+}
+
+<h4 class="border-bottom">Ürünler</h4>
+<div class="d-flex justify-content-end">
+    <a class="btn btn-primary" asp-action="Create">
+        <i class="bi bi-plus-lg"></i>
+        Yeni Kategori
+    </a>
+</div>
+<table class="table table-striped table-bordered">
+    <colgroup>
+        <col />
+        <col width="200" />
+    </colgroup>
+
+    <thead>
+        <tr>
+            <th>
+                Ürünler
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger remove-btn">
+                        <i class="bi bi-trash"></i>Sil
+                    </a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">
+                        <i class="bi bi-pen"></i>Düzenle
+                    </a>
+
+                </td>
+            </tr>
+
+        }
+
+
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
+@section scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script >
+    <script>
+        $('.remove-btn').on('click', (e) => {
+            Swal.fire({
+                icon: 'warning',
+                title: 'UYARI',
+                html: 'Emin misiniz?',
+                showCancelButton: true,
+                cancelButtonText: 'Iptal',
+                confirmButtonText: ' <i class="bi bi-trash"></i>Sil'
+
+            })
+                .then((r) => {
+                if (r.isConfirmed) {
+                    window.location = $(e.currentTarget).attr('href');
+                }
+
+            })
+            return false;
+        });
+    </script>
+
+
+        }
