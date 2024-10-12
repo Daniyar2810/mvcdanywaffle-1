@@ -24,11 +24,42 @@ public class CategoryController : Controller
     }
     public IActionResult Create()
     {
+       
         ViewBag.Category = dbContext.Categories.ToList<Category>();
         return View();
     }
     [HttpPost]
     public IActionResult Create(Category model)
+    {
+        Imagesel(model);
+        dbContext.Categories.Add(model);
+        dbContext.SaveChanges();
+        return RedirectToAction(nameof(Index));
+    }
+    public IActionResult Edit(Guid id)
+    {
+        var model = dbContext.Categories.Find(id);
+        return View(model);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Category model)
+    {
+        Imagesel(model);
+
+
+        dbContext.Categories.Update(model);
+        dbContext.SaveChanges();
+        return RedirectToAction(nameof(Index));
+    }
+    public IActionResult Delete(Guid id)
+    {
+        var model = dbContext.Categories.Find(id);
+        dbContext.Categories.Remove(model!);
+        dbContext.SaveChanges();
+        return RedirectToAction(nameof(Index));
+    }
+  private void Imagesel(Category model)
     {
         if (model.ImageFile is not null)
         {
@@ -44,29 +75,5 @@ public class CategoryController : Controller
             model.Image = image.ToBase64String(WebpFormat.Instance);
 
         }
-        dbContext.Categories.Add(model);
-        dbContext.SaveChanges();
-        return RedirectToAction(nameof(Index));
     }
-    public IActionResult Edit(Guid id)
-    {
-        var model = dbContext.Categories.Find(id);
-        return View(model);
-    }
-
-    [HttpPost]
-    public IActionResult Edit(Category model)
-    {
-        dbContext.Categories.Update(model);
-        dbContext.SaveChanges();
-        return RedirectToAction(nameof(Index));
-    }
-    public IActionResult Delete(Guid id)
-    {
-        var model = dbContext.Categories.Find(id);
-        dbContext.Categories.Remove(model!);
-        dbContext.SaveChanges();
-        return RedirectToAction(nameof(Index));
-    }
-    
 }

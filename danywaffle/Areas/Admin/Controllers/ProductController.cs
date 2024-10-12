@@ -48,20 +48,7 @@ public class ProductController : Controller
     [HttpPost]
     public IActionResult Edit(Product model)
     {
-        if (model.ImageFile is not null)
-        {
-            var image = Image.Load(model.ImageFile.OpenReadStream());
-            image.Mutate((p) =>
-            {
-                p.Resize(new ResizeOptions
-                {
-                    Size = new Size(800, 600),
-                    Mode = ResizeMode.Crop
-                });
-            });
-            model.Image = image.ToBase64String(WebpFormat.Instance);
-
-        }
+        Imageselect(model);
         dbContext.Products.Update(model);
         dbContext.SaveChanges();
         return RedirectToAction(nameof(Index));
