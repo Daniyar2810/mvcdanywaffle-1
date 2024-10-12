@@ -7,16 +7,40 @@
 
     <form method="post">
         <div class="mb-3 col-12 col-md-6 col-lg-3">
+            <label class="form-label" asp-for="CategoryId"></label>
+            <select class="form-select" asp-for="CategoryId" asp-items="@ViewBag.Categories">
+                <option value="" selected disabled>Seçiniz...</option>
+            </select>
+            <span class="text-danger" asp-validation-for="CategoryId"></span>
+        </div>
+
+        <div class="mb-3 col-12 col-md-6 col-lg-3">
             <label class="form-label" asp-for="Name"></label>
-            <input class="form-control" asp-for="Name" />
+            <input type="text" class="form-control" asp-for="Name" />
             <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+        <div class="mb-3 col-12 col-md-12 col-lg-12">
+            <label class="form-label" asp-for="Description"></label>
+            <textarea class="form-control" asp-for="Description"></textarea> />
+            <span class="text-danger" asp-validation-for="Description"></span>
+        </div>
+        <div class="mb-3 col-12 col-md-6 col-lg-3">
+            <label class="form-label" asp-for="Price"></label>
+            <input type="text" class="form-control" asp-for="Price" />
+            <span class="text-danger" asp-validation-for="Price"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="ImageFile"></label>
+            <input type="file" class="form-control" id="ImageFile" name="ImageFile" />
+
         </div>
         <hr />
         <button type="submit" class="btn btn-primary">
-            <i class="bi bi-save"></i>
-            KAYDET
+            <i class="bi bi-save"></i>Kaydet
+
         </button>
-        <a class="btn btn-link" asp-action="Index">İptal</a>
+
+        <a class="btn btn-primary" asp-action="Index">Iptal</a>
     </form>
 
     @section scripts {
