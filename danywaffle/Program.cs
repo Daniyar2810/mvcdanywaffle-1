@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddDbContext<AppDbContext>(config =>
 {
     config.UseLazyLoadingProxies();
